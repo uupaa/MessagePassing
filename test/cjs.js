@@ -31,11 +31,13 @@ const msg = new MessagePassing();
 const sub1 = new Sub1(msg);
 const sub2 = new Sub2(msg);
 
-msg.to(sub1, sub2).post("Hello"); // multicast no result
+// post is no result
+msg.to(sub1, sub2).post("Hello"); // multicast
 msg.to().remove(sub1).post("Happy", [1, 2, 3]); // broadcast(exclude sub1)
 
-const result1 = msg.to(sub1, sub2).send("Hello"); // multicast no result
-const result2 = msg.to().remove(sub1).send("Happy", [1, 2, 3]); // broadcast(exclude sub1)
+// send with result
+const result1 = msg.to(sub1, sub2).send("Hello"); // multicas
+const result2 = msg.to().remove(sub1).send("Happy", [1, 2, 3]); // broadcast(exclude sub1))
 
 if (result1.get(sub1) === "World" &&
     result1.get(sub2) === undefined &&

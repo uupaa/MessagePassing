@@ -52,6 +52,50 @@ Use `import` and `<script type="module">` style.
 <script type="module">
 import { MessagePassing } from "./dist/MessagePassing.esm.js";
 
+
+class Subscriber1 {
+  constructor(msg) {
+    msg.register(this, ["Hello"]);
+  }
+  onmessage(selector, options) {
+    switch (selector) {
+      case "Hello": return "World";
+    }
+
+  }
+}
+class Subscriber2 {
+  constructor(msg) {
+    msg.register(this, ["Happy"]);
+  }
+  onmessage(selector, options) {
+    switch (selector) {
+      case "Happy": return "Halloween";
+    }
+  }
+}
+
+const msg = new MessagePassing();
+const sub1 = new Subscriber1(msg);
+const sub2 = new Subscriber2(msg);
+
+// post() is no result
+msg.to(sub1, sub2).post("Hello"); // multicast
+msg.to().remove(sub1).post("Happy", [1, 2, 3]); // broadcast(exclude sub1)
+
+// send() with result
+const result1 = msg.to(sub1, sub2).send("Hello"); // multicas
+const result2 = msg.to().remove(sub1).send("Happy", [1, 2, 3]); // broadcast(exclude sub1)
+
+if (result1.get(sub1) === "World" &&
+    result1.get(sub2) === undefined &&
+    result2.get(sub1) === undefined &&
+    result2.get(sub2) === "Halloween" &&
+    result2.list(sub2).join("") === ["Halloween"].join("") ) {
+  document.body.style.backgroundColor = "lime";
+} else {
+  document.body.style.backgroundColor = "red";
+}
 </script> 
 </body> 
 </html> 
@@ -75,6 +119,11 @@ Use `<script src="MessagePassing.es5.js">` style.
 <script src="../dist/MessagePassing.es5.js"></script>
 <script>
 const MessagePassing = MessagePassingLib.MessagePassing;
+
+const msg = new MessagePassing();
+
+/* omit */
+
 </script> 
 </body> 
 </html> 
@@ -82,13 +131,40 @@ const MessagePassing = MessagePassingLib.MessagePassing;
 
 # Class
 
-## Class MessagePassing
+## Class MessagePassing and Message
 
 ```ts
 export class MessagePassing {
+  to(...subscribers:Array<MessageSubscriber>):Message,
+  register(subscriber:MessageSubscriber, selectors:Array<SelectorString> = ["ping"]),
+  unregister(subscriber:MessageSubscriber):MessagePassing,
+  unregisterAll():MessagePassing,
 }  
 
+export class Message {
+  constructor(selectors:Map<MessageSubscriber, Array<SelectorString>>, to:Set<MessageSubscriber>),
+  remove(subscriber:MessageSubscriber):Message,
+  send(selector:SelectorString, options:MessageOptions = undefined):MessageResult,
+  post(selector:SelectorString, options:MessageOptions = undefined):void,
+}
 ```
+
+## other Classes and Interfaces
+
+```ts
+type SelectorString = string;
+
+interface MessageSubscriber {
+  onmessage(selector:SelectorString, options:any):any|void,
+}
+type MessageOptions = number|string|undefined|object|Array<number>|Array<string>;
+
+export class MessageResult {
+  set(subscriber:MessageSubscriber, value:any):void,
+  get(subscriber:MessageSubscriber):any,
+  has(subscriber:MessageSubscriber):any,
+  list():Array<any>,
+}
 ```
 
 # LICENSE
