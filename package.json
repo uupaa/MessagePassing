@@ -1,0 +1,70 @@
+{
+  "name": "@uupaa/messagepassing",
+  "version": "0.0.0",
+  "description": "Implementation of lightweight message passing logic for TypeScript.",
+  "keywords": [
+    "MessagePassing",
+    "TypeScript"
+  ],
+  "main": "index.js",
+  "rollup": {
+    "esm": {
+      "input": "dist/MessagePassing.js",
+      "output": "dist/MessagePassing.esm.js"
+    },
+    "cjs": {
+      "input": "dist/MessagePassing.js",
+      "output": "dist/MessagePassing.cjs.js"
+    },
+    "es5": {
+      "input": "dist.es5/MessagePassing.js",
+      "output": "dist.es5/MessagePassing.es5.js",
+      "name": "MessagePassingLib"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "build:all": "npm run build:esm",
+    "build:esm": "tsc --build tsconfig.json",
+    "build:cjs": "tsc --build tsconfig.json",
+    "build:es5": "tsc --build tsconfig.es5.json",
+    "bundle": "npm run bundle:esm",
+    "bundle:esm": "rollup -c .rollup.esm.js",
+    "bundle:es5": "rollup -c .rollup.es5.js",
+    "bundle:cjs": "rollup -c .rollup.cjs.js",
+    "bundle:all": "npm run bundle:esm; npm run bundle:cjs",
+    "watch": "rollup -w -c .rollup.esm.js &",
+    "test": "npm run test:cjs",
+    "test:esm": "open https://localhost/MessagePassing/test/esm.html",
+    "test:es5": "open https://localhost/MessagePassing/test/es5.html",
+    "test:cjs": "node test/cjs.js",
+    "test:all": "npm run test:cjs; npm run test:esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uupaa/MessagePassing.git"
+  },
+  "author": "uupaa.js@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uupaa/MessagePassing/issues"
+  },
+  "homepage": "https://github.com/uupaa/MessagePassing#readme",
+  "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "eslint": "^6.6.0",
+    "execa": "^0.10.0",
+    "npm-run-all": "^4.1.3",
+    "request": "",
+    "rollup": "^1.26.2",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-license": "^0.12.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-watch": "^4.3.1"
+  }
+}

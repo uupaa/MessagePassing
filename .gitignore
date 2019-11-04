@@ -1,0 +1,17 @@
+## assets
+assets/
+
+## dist
+dist/tsconfig.tsbuildinfo
+dist.es5/tsconfig.es5.tsbuildinfo
+
+## ignore the dependency modules directory
+node_modules
+
+## ignore the file that is automatically regenerated
+
+## ignore the setting files
+.DS_Store
+
+## dust
+#package-lock.json
