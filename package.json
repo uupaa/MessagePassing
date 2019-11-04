@@ -1,12 +1,12 @@
 {
   "name": "@uupaa/messagepassing",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Implementation of lightweight message passing logic for TypeScript.",
   "keywords": [
     "MessagePassing",
     "TypeScript"
   ],
-  "main": "index.js",
+  "main": "dist/MessagePassing.cjs.js",
   "rollup": {
     "esm": {
       "input": "dist/MessagePassing.js",
@@ -22,11 +22,15 @@
       "name": "MessagePassingLib"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "prepublishOnly": "npm run build:esm",
     "build": "tsc --build tsconfig.json",
     "build:all": "npm run build:esm",
     "build:esm": "tsc --build tsconfig.json",
-    "build:cjs": "tsc --build tsconfig.json",
+    "build:cjs": "tsc --build tsconfig.cjs.json",
     "build:es5": "tsc --build tsconfig.es5.json",
     "bundle": "npm run bundle:esm",
     "bundle:esm": "rollup -c .rollup.esm.js",
@@ -51,6 +55,7 @@
   },
   "homepage": "https://github.com/uupaa/MessagePassing#readme",
   "devDependencies": {
+    "@types/node": "^12.12.5",
     "babel-eslint": "^8.2.5",
     "babel-preset-es2015-rollup": "^3.0.0",
     "eslint": "^6.6.0",
@@ -65,6 +70,7 @@
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-license": "^0.12.1",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-watch": "^4.3.1"
+    "rollup-watch": "^4.3.1",
+    "typescript": "^3.6.4"
   }
 }
