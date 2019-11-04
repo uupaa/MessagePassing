@@ -1,12 +1,13 @@
 {
   "name": "@uupaa/messagepassing",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Implementation of lightweight message passing logic for TypeScript.",
   "keywords": [
     "MessagePassing",
     "TypeScript"
   ],
   "main": "dist/MessagePassing.cjs.js",
+  "types": "dist/MessagePassing",
   "rollup": {
     "esm": {
       "input": "dist/MessagePassing.js",
