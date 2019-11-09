@@ -6,42 +6,29 @@
     "MessagePassing",
     "TypeScript"
   ],
-  "main": "dist/MessagePassing.cjs.js",
-  "types": "dist/MessagePassing",
+  "main": "MessagePassing.js",
+  "types": "MessagePassing.d.ts",
   "rollup": {
     "esm": {
-      "input": "dist/MessagePassing.js",
+      "input": "MessagePassing.js",
       "output": "dist/MessagePassing.esm.js"
     },
     "cjs": {
-      "input": "dist/MessagePassing.js",
+      "input": "MessagePassing.js",
       "output": "dist/MessagePassing.cjs.js"
-    },
-    "es5": {
-      "input": "dist.es5/MessagePassing.js",
-      "output": "dist.es5/MessagePassing.es5.js",
-      "name": "MessagePassingLib"
     }
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "prepublishOnly": "npm run build:esm",
-    "build": "tsc --build tsconfig.json",
-    "build:all": "npm run build:esm",
+    "prepublishOnly": "npm run build",
+    "build": "npm run build:esm",
     "build:esm": "tsc --build tsconfig.json",
-    "build:cjs": "tsc --build tsconfig.cjs.json",
-    "build:es5": "tsc --build tsconfig.es5.json",
     "bundle": "npm run bundle:esm",
     "bundle:esm": "rollup -c .rollup.esm.js",
-    "bundle:es5": "rollup -c .rollup.es5.js",
     "bundle:cjs": "rollup -c .rollup.cjs.js",
     "bundle:all": "npm run bundle:esm; npm run bundle:cjs",
     "watch": "rollup -w -c .rollup.esm.js &",
     "test": "npm run test:cjs",
     "test:esm": "open https://localhost/MessagePassing/test/esm.html",
-    "test:es5": "open https://localhost/MessagePassing/test/es5.html",
     "test:cjs": "node test/cjs.js",
     "test:all": "npm run test:cjs; npm run test:esm"
   },

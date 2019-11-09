@@ -3,12 +3,12 @@
 # PREPARE
 
 ```sh
-$ npm i -S @uupaa/MessagePassing
+$ npm i -S @uupaa/messagepassing
 ```
 
 # Build and Bundle modules
 
-`npm run build` command build to `dist/MessagePassing.js` file.
+`npm run build` command build to `./MessagePassing.js` file.
 
 `npm run bundle:all` command bundle to `dist/MessagePassing.esm.js` and `dist/MessagePassing.cjs.js` files.
 
@@ -16,11 +16,11 @@ and other commands.
 
 | commands             | input file    | output file(s) |
 |----------------------|---------------|-------------|
-| `npm run build`      | `ts/*.ts`     | `dist/MessagePassing.js` |
-| `npm run bundle`     | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` |
-| `npm run bundle:esm` | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` |
-| `npm run bundle:cjs` | `dist/MessagePassing.js` | `dist/MessagePassing.cjs.js` |
-| `npm run bundle:all` | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` <br />`dist/MessagePassing.cjs.js` |
+| `npm run build`      | `./ts/*.ts`     | `./MessagePassing.js` <br /> `./MessagePassing.d.ts` |
+| `npm run bundle`     | `./MessagePassing.js` | `dist/MessagePassing.esm.js` |
+| `npm run bundle:esm` | `./MessagePassing.js` | `dist/MessagePassing.esm.js` |
+| `npm run bundle:cjs` | `./MessagePassing.js` | `dist/MessagePassing.cjs.js` |
+| `npm run bundle:all` | `./MessagePassing.js` | `dist/MessagePassing.esm.js` <br />`dist/MessagePassing.cjs.js` |
 | `npm run watch`      |  |  |
 
 # Browser and runtime support
@@ -41,6 +41,40 @@ and other commands.
 
 # USAGE
 
+## for TypeScript 
+
+Use TypeScript without `--moduleResolution` and `--baseUrl` compiler options.
+
+```tsconfig.json
+{
+  "compilerOptions": {
+    "module": "ESNext",
+  //"moduleResolution": "node",
+  //"baseUrl": "./",
+}
+```
+
+```ts
+import { MessagePassing } from "../node_modules/@uupaa/messagepassing/MessagePassing"
+```
+
+Use TypeScript with `--moduleResolution` and `--baseUrl` compiler options.
+
+```tsconfig.json
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "baseUrl": "./",
+}
+```
+
+```ts
+import { MessagePassing } from "@uupaa/messagepassing"
+```
+
+## for ESModule in Browser
+
 Use `import` and `<script type="module">` style.
 
 ```html
@@ -50,8 +84,7 @@ Use `import` and `<script type="module">` style.
 </head> 
 <body>
 <script type="module">
-import { MessagePassing } from "./dist/MessagePassing.esm.js";
-
+import { MessagePassing } from "./node_modules/@uupaa/messagepassing/MessagePassing.js";
 
 class Subscriber1 {
   constructor(msg) {
@@ -101,32 +134,13 @@ if (result1.get(sub1) === "World" &&
 </html> 
 ```
 
+## for Node.js
+
 Use CommonJS style.
 
 ```js
 // test/cjs.js
 const MessagePassing = require("../dist/MessagePassing.cjs.js").MessagePassing;
-```
-
-Use `<script src="MessagePassing.es5.js">` style.
-
-```html
-// test/es5.html
-<!DOCTYPE html><html><head> 
-<title>MessagePassing browser test</title> 
-</head> 
-<body>
-<script src="../dist/MessagePassing.es5.js"></script>
-<script>
-const MessagePassing = MessagePassingLib.MessagePassing;
-
-const msg = new MessagePassing();
-
-/* omit */
-
-</script> 
-</body> 
-</html> 
 ```
 
 # Class
