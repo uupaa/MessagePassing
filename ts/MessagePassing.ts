@@ -1,9 +1,9 @@
-type SelectorString = string;
+export type SelectorString = string;
 
 export interface MessageSubscriber {
   onmessage(selector:SelectorString, options:any):any|void,
 }
-type MessageOptions = number|string|undefined|object|Array<number>|Array<string>;
+export type MessageOptions = number|string|undefined|object|Array<number>|Array<string>;
 
 export class MessageResult {
   private _result:Map<MessageSubscriber, any> = new Map();

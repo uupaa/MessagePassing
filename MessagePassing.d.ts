@@ -1,8 +1,8 @@
-declare type SelectorString = string;
+export declare type SelectorString = string;
 export interface MessageSubscriber {
     onmessage(selector: SelectorString, options: any): any | void;
 }
-declare type MessageOptions = number | string | undefined | object | Array<number> | Array<string>;
+export declare type MessageOptions = number | string | undefined | object | Array<number> | Array<string>;
 export declare class MessageResult {
     private _result;
     set(subscriber: MessageSubscriber, value: any): void;
@@ -26,4 +26,3 @@ export declare class Message {
     send(selector: SelectorString, options?: MessageOptions): MessageResult;
     post(selector: SelectorString, options?: MessageOptions): void;
 }
-export {};
