@@ -3,7 +3,7 @@ const WARN = "\u001b[33m"; // YELLOW
 const INFO = "\u001b[32m"; // GREEN
 const CLR  = "\u001b[0m";  // WHITE
 
-const { MessagePassing } = require("../dist/MessagePassing.cjs.js");
+const { MessagePassing } = require("../lib/MessagePassing.cjs.js");
 
 class Sub1 {
   constructor(msg) {

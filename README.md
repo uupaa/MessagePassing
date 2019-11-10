@@ -12,7 +12,7 @@ $ npm i -S @uupaa/messagepassing
 // Pattern 1 (recommended): import complete relative path without `--moduleResolution` and `--baseUrl` compiler options.
 // For import url, specify the complete relative path.
 // This works with node.js and browser. Please consider bundled into one file.
-import { MessagePassing, MessageSubscriber, MessageOptions, MessageResult } from "../node_modules/@uupaa/messagepassing/MessagePassing.js";
+import { MessagePassing, MessageSubscriber, MessageOptions, MessageResult } from "../node_modules/@uupaa/messagepassing/lib/MessagePassing.esm.js";
 
 /*
 {
@@ -44,20 +44,19 @@ import { MessagePassing, MessageSubscriber, MessageOptions, MessageResult } from
 
 # Build and Bundle modules
 
-The `npm run build` command, build to `./MessagePassing.js` file.
+The `npm run build` command, build to `lib/MessagePassing.js` file.
 
-The `npm run bundle:all` command, bundle to `dist/MessagePassing.esm.js` and `dist/MessagePassing.cjs.js` files.
+The `npm run bundle:all` command, bundle to `lib/MessagePassing.esm.js` and `lib/MessagePassing.cjs.js` files.
 
 Other commands.
 
 | command              | input         | output      |
 |----------------------|---------------|-------------|
-| `npm run build`      | `ts/`         | `dist/MessagePassing.js` <br /> `dist/MessagePassing.d.ts` <br /> `./MessagePassing.js` <br /> `./MessagePassing.d.ts` |
-| `npm run build:copy` | `dist/MessagePassing.js` <br /> `dist/MessagePassing.d.ts` | `./MessagePassing.js` <br > `./MessagePassing.d.ts` |
-| `npm run bundle`     | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` |
-| `npm run bundle:esm` | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` |
-| `npm run bundle:cjs` | `dist/MessagePassing.js` | `dist/MessagePassing.cjs.js` |
-| `npm run bundle:all` | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` <br />`dist/MessagePassing.cjs.js` |
+| `npm run build`      | `ts/`         | `lib/MessagePassing.js` <br /> `lib/MessagePassing.d.ts` |
+| `npm run bundle`     | `lib/MessagePassing.js` | `lib/MessagePassing.esm.js` |
+| `npm run bundle:esm` | `lib/MessagePassing.js` | `lib/MessagePassing.esm.js` |
+| `npm run bundle:cjs` | `lib/MessagePassing.js` | `lib/MessagePassing.cjs.js` |
+| `npm run bundle:all` | `lib/MessagePassing.js` | `lib/MessagePassing.esm.js` <br />`lib/MessagePassing.cjs.js` |
 | `npm run watch`      |  |  |
 
 # Browser and runtime support
@@ -89,7 +88,7 @@ Use `import` and `<script type="module">` style.
 </head> 
 <body>
 <script type="module">
-import { MessagePassing } from "./node_modules/@uupaa/messagepassing/MessagePassing.js";
+import { MessagePassing } from "./node_modules/@uupaa/messagepassing/lib/MessagePassing.esm.js";
 
 class Subscriber1 {
   constructor(msg) {
@@ -145,7 +144,7 @@ Use require() style.
 
 ```js
 // test/cjs.js
-const MessagePassing = require("../dist/MessagePassing.cjs.js").MessagePassing;
+const MessagePassing = require("../lib/MessagePassing.cjs.js").MessagePassing;
 ```
 
 # d.ts
