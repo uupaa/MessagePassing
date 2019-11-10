@@ -1,6 +1,6 @@
 {
   "name": "@uupaa/messagepassing",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Implementation of lightweight message passing logic for TypeScript.",
   "keywords": [
     "MessagePassing",
@@ -20,8 +20,9 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "npm run build:esm",
+    "build": "npm run build:esm; npm run build:copy",
     "build:esm": "tsc --build tsconfig.json",
+    "build:copy": "cp dist/MessagePassing.js ./MessagePassing.js; cp dist/MessagePassing.d.ts ./MessagePassing.d.ts",
     "bundle": "npm run bundle:esm",
     "bundle:esm": "rollup -c .rollup.esm.js",
     "bundle:cjs": "rollup -c .rollup.cjs.js",

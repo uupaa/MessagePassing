@@ -1,6 +1,6 @@
 type SelectorString = string;
 
-interface MessageSubscriber {
+export interface MessageSubscriber {
   onmessage(selector:SelectorString, options:any):any|void,
 }
 type MessageOptions = number|string|undefined|object|Array<number>|Array<string>;
