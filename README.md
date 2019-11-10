@@ -6,21 +6,58 @@
 $ npm i -S @uupaa/messagepassing
 ```
 
+# import
+
+```ts
+// Pattern 1 (recommended): import complete relative path without `--moduleResolution` and `--baseUrl` compiler options.
+// For import url, specify the complete relative path.
+// This works with node.js and browser. Please consider bundled into one file.
+import { MessagePassing, MessageSubscriber, MessageOptions, MessageResult } from "../node_modules/@uupaa/messagepassing/MessagePassing.js";
+
+/*
+{
+  "compilerOptions": {
+    "module": "ESNext",
+  //"moduleResolution": "node",
+  //"baseUrl": "./",
+  }
+}
+ */
+```
+
+```ts
+// Pattern 2: import package name with `--moduleResolution` and `--baseUrl` compiler options.
+// For import url, specify the short package name.
+// This works in node.js, but does not work if you import directly from the browser.
+import { MessagePassing, MessageSubscriber, MessageOptions, MessageResult } from "@uupaa/messagepassing";
+
+/*
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "baseUrl": "./",
+  }
+}
+ */
+```
+
 # Build and Bundle modules
 
-`npm run build` command build to `./MessagePassing.js` file.
+The `npm run build` command, build to `./MessagePassing.js` file.
 
-`npm run bundle:all` command bundle to `dist/MessagePassing.esm.js` and `dist/MessagePassing.cjs.js` files.
+The `npm run bundle:all` command, bundle to `dist/MessagePassing.esm.js` and `dist/MessagePassing.cjs.js` files.
 
-and other commands.
+Other commands.
 
-| commands             | input file    | output file(s) |
+| command              | input         | output      |
 |----------------------|---------------|-------------|
-| `npm run build`      | `./ts/*.ts`     | `./MessagePassing.js` <br /> `./MessagePassing.d.ts` |
-| `npm run bundle`     | `./MessagePassing.js` | `dist/MessagePassing.esm.js` |
-| `npm run bundle:esm` | `./MessagePassing.js` | `dist/MessagePassing.esm.js` |
-| `npm run bundle:cjs` | `./MessagePassing.js` | `dist/MessagePassing.cjs.js` |
-| `npm run bundle:all` | `./MessagePassing.js` | `dist/MessagePassing.esm.js` <br />`dist/MessagePassing.cjs.js` |
+| `npm run build`      | `ts/`         | `dist/MessagePassing.js` <br /> `dist/MessagePassing.d.ts` <br /> `./MessagePassing.js` <br /> `./MessagePassing.d.ts` |
+| `npm run build:copy` | `dist/MessagePassing.js` <br /> `dist/MessagePassing.d.ts` | `./MessagePassing.js` <br > `./MessagePassing.d.ts` |
+| `npm run bundle`     | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` |
+| `npm run bundle:esm` | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` |
+| `npm run bundle:cjs` | `dist/MessagePassing.js` | `dist/MessagePassing.cjs.js` |
+| `npm run bundle:all` | `dist/MessagePassing.js` | `dist/MessagePassing.esm.js` <br />`dist/MessagePassing.cjs.js` |
 | `npm run watch`      |  |  |
 
 # Browser and runtime support
@@ -41,39 +78,7 @@ and other commands.
 
 # USAGE
 
-## for TypeScript 
-
-Use TypeScript without `--moduleResolution` and `--baseUrl` compiler options.
-
-```tsconfig.json
-{
-  "compilerOptions": {
-    "module": "ESNext",
-  //"moduleResolution": "node",
-  //"baseUrl": "./",
-}
-```
-
-```ts
-import { MessagePassing } from "../node_modules/@uupaa/messagepassing/MessagePassing"
-```
-
-Use TypeScript with `--moduleResolution` and `--baseUrl` compiler options.
-
-```tsconfig.json
-{
-  "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "baseUrl": "./",
-}
-```
-
-```ts
-import { MessagePassing } from "@uupaa/messagepassing"
-```
-
-## for ESModule in Browser
+## Browser with ESModule
 
 Use `import` and `<script type="module">` style.
 
@@ -134,50 +139,45 @@ if (result1.get(sub1) === "World" &&
 </html> 
 ```
 
-## for Node.js
+## Node.js with require()
 
-Use CommonJS style.
+Use require() style.
 
 ```js
 // test/cjs.js
 const MessagePassing = require("../dist/MessagePassing.cjs.js").MessagePassing;
 ```
 
-# Class
-
-## Class MessagePassing and Message
+# d.ts
 
 ```ts
-export class MessagePassing {
-  to(...subscribers:Array<MessageSubscriber>):Message,
-  register(subscriber:MessageSubscriber, selectors:Array<SelectorString> = ["ping"]),
-  unregister(subscriber:MessageSubscriber):MessagePassing,
-  unregisterAll():MessagePassing,
-}  
-
-export class Message {
-  constructor(selectors:Map<MessageSubscriber, Array<SelectorString>>, to:Set<MessageSubscriber>),
-  remove(subscriber:MessageSubscriber):Message,
-  send(selector:SelectorString, options:MessageOptions = undefined):MessageResult,
-  post(selector:SelectorString, options:MessageOptions = undefined):void,
+export declare type SelectorString = string;
+export interface MessageSubscriber {
+    onmessage(selector: SelectorString, options: any): any | void;
 }
-```
-
-## other Classes and Interfaces
-
-```ts
-type SelectorString = string;
-
-interface MessageSubscriber {
-  onmessage(selector:SelectorString, options:any):any|void,
+export declare type MessageOptions = number | string | undefined | object | Array<number> | Array<string>;
+export declare class MessageResult {
+    private _result;
+    set(subscriber: MessageSubscriber, value: any): void;
+    get(subscriber: MessageSubscriber): any;
+    has(subscriber: MessageSubscriber): any;
+    list(): Array<any>;
 }
-type MessageOptions = number|string|undefined|object|Array<number>|Array<string>;
-
-export class MessageResult {
-  set(subscriber:MessageSubscriber, value:any):void,
-  get(subscriber:MessageSubscriber):any,
-  has(subscriber:MessageSubscriber):any,
-  list():Array<any>,
+export declare class MessagePassing {
+    private _subscribers;
+    private _selectors;
+    to(...subscribers: Array<MessageSubscriber>): Message;
+    register(subscriber: MessageSubscriber, selectors?: Array<SelectorString>): MessagePassing;
+    unregister(subscriber: MessageSubscriber): MessagePassing;
+    unregisterAll(): MessagePassing;
+}
+export declare class Message {
+    private _selectors;
+    private _to;
+    constructor(selectors: Map<MessageSubscriber, Array<SelectorString>>, to: Set<MessageSubscriber>);
+    remove(subscriber: MessageSubscriber): Message;
+    send(selector: SelectorString, options?: MessageOptions): MessageResult;
+    post(selector: SelectorString, options?: MessageOptions): void;
 }
 ```
 
