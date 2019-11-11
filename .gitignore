@@ -11,6 +11,7 @@ node_modules
 
 ## ignore the setting files
 .DS_Store
+.vscode
 
 ## dust
 #package-lock.json

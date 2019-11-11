@@ -1,7 +1,7 @@
-export type SelectorString = string;
+export type Selector = string|number;
 
 export interface MessageSubscriber {
-  onmessage(selector:SelectorString, options:any):any|void,
+  onmessage(selector:Selector, options:any):any|void,
 }
 export type MessageOptions = number|string|undefined|object|Array<number>|Array<string>;
 
@@ -24,13 +24,13 @@ export class MessageResult {
 
 export class MessagePassing {
   private _subscribers:Set<MessageSubscriber> = new Set();
-  private _selectors:Map<MessageSubscriber, Array<SelectorString>> = new Map();
+  private _selectors:Map<MessageSubscriber, Array<Selector>> = new Map();
   to(...subscribers:Array<MessageSubscriber>):Message {
     const to = new Set(subscribers.length ? subscribers.concat() // broadcast
                                           : this._subscribers.keys()); // unicast, multicast
     return new Message(this._selectors, to);
   }
-  register(subscriber:MessageSubscriber, selectors:Array<SelectorString> = ["ping"]):MessagePassing {
+  register(subscriber:MessageSubscriber, selectors:Array<Selector> = ["ping"]):MessagePassing {
     if (!subscriber) {
       throw new TypeError(`Invalid subscriber: ${subscriber}`);
     }
@@ -60,10 +60,10 @@ export class MessagePassing {
 }
 
 export class Message {
-  private _selectors:Map<MessageSubscriber, Array<SelectorString>>;
+  private _selectors:Map<MessageSubscriber, Array<Selector>>;
   private _to:Set<MessageSubscriber>; // unique array
 
-  constructor(selectors:Map<MessageSubscriber, Array<SelectorString>>, to:Set<MessageSubscriber>) {
+  constructor(selectors:Map<MessageSubscriber, Array<Selector>>, to:Set<MessageSubscriber>) {
     this._selectors = selectors;
     this._to = to;
   }
@@ -71,7 +71,7 @@ export class Message {
     this._to.delete(subscriber)
     return this;
   }
-  send(selector:SelectorString, options:MessageOptions = undefined):MessageResult {
+  send(selector:Selector, options:MessageOptions = undefined):MessageResult {
     const to = Array.from(this._to.values());
     const result = new MessageResult();
 
@@ -96,7 +96,7 @@ export class Message {
     return result;
   }
 
-  post(selector:SelectorString, options:MessageOptions = undefined):void {
+  post(selector:Selector, options:MessageOptions = undefined):void {
     const to = Array.from(this._to.values());
 
     try {

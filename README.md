@@ -150,9 +150,9 @@ const MessagePassing = require("../lib/MessagePassing.cjs.js").MessagePassing;
 # d.ts
 
 ```ts
-export declare type SelectorString = string;
+export declare type Selector = string|number;
 export interface MessageSubscriber {
-    onmessage(selector: SelectorString, options: any): any | void;
+    onmessage(selector: Selector, options: any): any | void;
 }
 export declare type MessageOptions = number | string | undefined | object | Array<number> | Array<string>;
 export declare class MessageResult {
@@ -166,17 +166,17 @@ export declare class MessagePassing {
     private _subscribers;
     private _selectors;
     to(...subscribers: Array<MessageSubscriber>): Message;
-    register(subscriber: MessageSubscriber, selectors?: Array<SelectorString>): MessagePassing;
+    register(subscriber: MessageSubscriber, selectors?: Array<Selector>): MessagePassing;
     unregister(subscriber: MessageSubscriber): MessagePassing;
     unregisterAll(): MessagePassing;
 }
 export declare class Message {
     private _selectors;
     private _to;
-    constructor(selectors: Map<MessageSubscriber, Array<SelectorString>>, to: Set<MessageSubscriber>);
+    constructor(selectors: Map<MessageSubscriber, Array<Selector>>, to: Set<MessageSubscriber>);
     remove(subscriber: MessageSubscriber): Message;
-    send(selector: SelectorString, options?: MessageOptions): MessageResult;
-    post(selector: SelectorString, options?: MessageOptions): void;
+    send(selector: Selector, options?: MessageOptions): MessageResult;
+    post(selector: Selector, options?: MessageOptions): void;
 }
 ```
 
